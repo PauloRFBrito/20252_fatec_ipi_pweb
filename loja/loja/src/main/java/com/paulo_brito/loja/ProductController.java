@@ -1,6 +1,7 @@
 package com.paulo_brito.loja;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,7 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+
 
 @RestController // Controlador REST
 @CrossOrigin(origins="*") // Permite que outros domínios acessem a API.
@@ -47,19 +51,19 @@ public class ProductController {
     System.out.println("Produto removido!");
    }
 
+   @GetMapping("/api/produtos") //Listar todos os produtos
+   public Iterable<Product> listAll() {
+        return bd.findAll();
+   }
+
+   @GetMapping("/api/produtos/vitrine") //Listar os produtos por ordem de destaque 
+   public Iterable<Product> listFeatured() {
+    Sort ordenacao = Sort.by("destaque").ascending();
+    return  bd.findAllFeatured(ordenacao);
+   }
+
+   @GetMapping("/api/produtos/key") //?termo=iphone
+    public Iterable<Product> searchProducts(@RequestParam("termo") String termo) {
+        return bd.findBySearchTerm(termo);
+    }
 }
-//  public Product criar(@PathVariable("id") int id) {
-//         Product obj = new Product();
-//         obj.setCodigo("IPH15/512/8");
-//         obj.setMarca("Apple");
-//         obj.setModelo("Iphone 17");
-//         obj.setSo("iOS");
-//         obj.setDescricao("Aparelho lacrado, cor sálvia");
-//         obj.setArmazenamento("512 GB");
-//         obj.setMemoria(" 8GB");
-//         obj.setPreco(9200);
-//         obj.setPromo(9000);
-//         obj.setQuantidade(5);
-//         obj.setDestaque(1);
-//         return obj;
-//     }

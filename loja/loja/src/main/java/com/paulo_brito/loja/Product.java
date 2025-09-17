@@ -17,7 +17,7 @@ public class Product {
     private String preco;
     private String promo;
     private String estoque;
-    private String destaque;
+    private int destaque;
     private String keywords;
     
     public int getCodigo() {
@@ -80,10 +80,10 @@ public class Product {
     public void setEstoque(String estoque) {
         this.estoque = estoque;
     }
-    public String getDestaque() {
+    public int getDestaque() {
         return destaque;
     }
-    public void setDestaque(String destaque) {
+    public void setDestaque(int destaque) {
         this.destaque = destaque;
     }
     public String getKeywords() {
