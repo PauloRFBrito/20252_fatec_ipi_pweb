@@ -9,9 +9,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 
-@Repository // Interface que itera no BD.
+@Repository
 
-public interface ProductRepository // Interface que herda os métodos CRUD
+public interface ProductRepository 
+
 extends JpaRepository<Product, Integer>{
     @Modifying
     @Transactional
@@ -20,12 +21,11 @@ extends JpaRepository<Product, Integer>{
     void deleteByCodigo(int codigo);
 
     @Query("SELECT p FROM Product p WHERE p.destaque > 0")
-    Iterable<Product> findAllFeatured(Sort ordenacao); //Cria uma query usando o valor do campo "destaque" como parametro
+    Iterable<Product> findAllFeatured(Sort ordenacao); 
 
     @Query(value = "SELECT p FROM Product p WHERE p.descricao LIKE %:termo% OR p.keywords LIKE %:termo%")
     Iterable<Product> findBySearchTerm(@Param("termo") String termo);
    
 
 }
-
 

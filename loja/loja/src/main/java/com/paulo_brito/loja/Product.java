@@ -1,12 +1,14 @@
 package com.paulo_brito.loja;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@Entity // Mapeia as classes para tabelas no BD.
-
+@Entity 
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int codigo;
     private String marca;
     private String modelo;
@@ -19,11 +21,11 @@ public class Product {
     private String estoque;
     private int destaque;
     private String keywords;
-    
+
     public int getCodigo() {
-        return codigo;
+        return codigo;               
     }
-    public void setCodigo(int codigo) {
+      public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
     public String getMarca() {

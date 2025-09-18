@@ -15,27 +15,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-@RestController // Controlador REST
-@CrossOrigin(origins="*") // Permite que outros domínios acessem a API.
+@RestController 
+@CrossOrigin(origins="*") 
 
 public class ProductController {
     @Autowired
     private ProductRepository bd;
 
-   @PostMapping("/api/produto") // Usado para criar novo recurso no sistema(inserir no banco)
-   public void create(@RequestBody Product obj) { //RequestBody -> Extrai e converte body da requisição HTTP em obj Java da classe Product. 
+   @PostMapping("/api/produto")
+   public void create(@RequestBody Product obj) {
     bd.save(obj);
     System.out.println("Produto criado!");
    }
 
-   @PutMapping("/api/produto") // Usado para atuailzar recurso existente.
+   @PutMapping("/api/produto")
    public void alter(@RequestBody Product obj) {
     bd.save(obj);
     System.out.println("Produto alterado!");
    }
 
-   @GetMapping("/api/produto/{codigo}") // Usado para buscar infos
-   public Product search(@PathVariable("codigo") int codigo) { //PathVariable -> Extrai valor do parâmetro da URL para uma váriavel.
+   @GetMapping("/api/produto/{codigo}")
+   public Product search(@PathVariable("codigo") int codigo) {
     if(bd.existsById(codigo)) {
         return bd.findById(codigo).get();    
     }
@@ -44,25 +44,25 @@ public class ProductController {
     }
    }
 
-   @DeleteMapping("/api/produto/{codigo}") //USado para deletar infos
+   @DeleteMapping("/api/produto/{codigo}") 
    @Transactional
    public void erase(@PathVariable("codigo") int codigo) {
     bd.deleteById(codigo);
     System.out.println("Produto removido!");
    }
 
-   @GetMapping("/api/produtos") //Listar todos os produtos
+   @GetMapping("/api/produtos") 
    public Iterable<Product> listAll() {
         return bd.findAll();
    }
 
-   @GetMapping("/api/produtos/vitrine") //Listar os produtos por ordem de destaque 
+   @GetMapping("/api/produtos/vitrine") 
    public Iterable<Product> listFeatured() {
     Sort ordenacao = Sort.by("destaque").ascending();
     return  bd.findAllFeatured(ordenacao);
    }
 
-   @GetMapping("/api/produtos/key") //?termo=iphone
+   @GetMapping("/api/produtos/busca?termo=") 
     public Iterable<Product> searchProducts(@RequestParam("termo") String termo) {
         return bd.findBySearchTerm(termo);
     }
